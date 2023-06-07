@@ -8,4 +8,4 @@ A basic password generator that will generate random characters and concatenate 
 
 ## Image
 
-![Screenshot](./Password%20Generator.jpg)
+![Screenshot](./Password%20Generator.png)

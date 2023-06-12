@@ -72,7 +72,8 @@ header {
   clear: both;
 }
 
-.checkbox,.boxes {
+.checkbox,
+.boxes {
   border: none;
   background-color: rgb(173, 216, 230);
   border-radius: 15px;

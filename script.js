@@ -95,18 +95,124 @@ const allCharacters = [
   ],
 ];
 
+const characterMap = {
+  upperCase: [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z",
+  ],
+  lowerCase: [
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g",
+    "h",
+    "i",
+    "j",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "p",
+    "q",
+    "r",
+    "s",
+    "t",
+    "u",
+    "v",
+    "w",
+    "x",
+    "y",
+    "z",
+  ],
+  numbers: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
+  symbols: [
+    "!",
+    '"',
+    "#",
+    "$",
+    "%",
+    "&",
+    "'",
+    "(",
+    ")",
+    "*",
+    ",",
+    "-",
+    ".",
+    "/",
+    ":",
+    ";",
+    "<",
+    "=",
+    ">",
+    "?",
+    "@",
+    "[",
+    "\\",
+    "]",
+    "^",
+    "_",
+    "`",
+    "{",
+    "|",
+    "}",
+    "~",
+  ],
+};
+
 // Generates the password
 const generatePassword = () => {
   let randomPassword = "";
+  let passwordArray = [];
+
+  if (document.querySelector("#upperCase").checked) {
+    passwordArray = passwordArray.concat(characterMap.upperCase);
+  }
+  if (document.querySelector("#lowerCase").checked) {
+    passwordArray = passwordArray.concat(characterMap.lowerCase);
+  }
+  if (document.querySelector("#numbers").checked) {
+    passwordArray = passwordArray.concat(characterMap.numbers);
+  }
+  if (document.querySelector("#symbols").checked) {
+    passwordArray = passwordArray.concat(characterMap.symbols);
+  }
 
   // Generates a password based on the length given by user
-  for (let i = 0; i < document.getElementById("passwordLength").value; i++) {
-    let firstArray = Math.floor(Math.random() * allCharacters.length);
-    let secondArray = Math.floor(
-      Math.random() * allCharacters[firstArray].length
-    );
-    randomPassword = randomPassword + allCharacters[firstArray][secondArray];
+  for (let i = 0; i < document.querySelector("#passwordLength").value; i++) {
+    let randomCharacter = Math.floor(Math.random() * passwordArray.length);
+
+    randomPassword = randomPassword + passwordArray[randomCharacter];
   }
+
   return randomPassword;
 };
 
@@ -132,8 +238,19 @@ const copyPassword = () => {
 
 // Write password to the #password input
 const writePassword = () => {
-  //If the length is less than 8, return error
-  if (document.querySelector("#passwordLength").value < 8) {
+  // If none of the boxes are checked, return error
+  if (
+    !document.querySelector("#upperCase").checked &&
+    !document.querySelector("#lowerCase").checked &&
+    !document.querySelector("#numbers").checked &&
+    !document.querySelector("#symbols").checked
+  ) {
+    document.querySelector("#password").value = "";
+    document.querySelector("#password").placeholder =
+      "You must have at least 1 checkbox checked.";
+  }
+  // If the length is less than 8, return error
+  else if (document.querySelector("#passwordLength").value < 8) {
     document.querySelector("#password").value = "";
     document.querySelector("#password").placeholder =
       "Password must be at least 8 characters long.";
